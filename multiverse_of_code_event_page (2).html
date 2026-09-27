@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiverse of Code 2026 | GeeksForGeeks Student Chapter Bennett University</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tone.js for Web Audio Synthesizer Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <!-- Tailwind Theme Customizations -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        stark: {
+                            bg: '#05070c',
+                            card: '#0c1220',
+                            border: 'rgba(255, 255, 255, 0.12)',
+                            accent: '#00F0FF',
+                            heroRed: '#EC1D24',
+                            brightRed: '#FF2A5F',
+                            darkRed: '#9F1239',
+                            gold: '#FFD700',
+                            purple: '#A855F7',
+                            teal: '#14B8A6',
+                            emerald: '#10B981'
+                        }
+                    },
+                    fontFamily: {
+                        marvel: ['"Bebas Neue"', 'sans-serif'],
+                        hud: ['"Orbitron"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'stark-glow': '0 0 25px rgba(0, 240, 255, 0.35)',
+                        'red-glow': '0 0 25px rgba(236, 29, 36, 0.45)',
+                        'gold-glow': '0 0 25px rgba(255, 215, 0, 0.45)',
+                        'purple-glow': '0 0 25px rgba(168, 85, 247, 0.45)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #05070c;
+            color: #f8fafc;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(236, 29, 36, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 60%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        }
+
+        /* Glassmorphic Dark HUD Cards */
+        .dark-stark-card {
+            background: rgba(12, 18, 32, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-stark-card:hover {
+            border-color: rgba(0, 240, 255, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px -5px rgba(0, 240, 255, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05070c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #EC1D24;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+
+        /* Neon Glow Text Utilities */
+        .text-glow-red {
+            text-shadow: 0 0 16px rgba(236, 29, 36, 0.8), 0 0 32px rgba(236, 29, 36, 0.4);
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 16px rgba(0, 240, 255, 0.8), 0 0 32px rgba(0, 240, 255, 0.4);
+        }
+        .text-glow-gold {
+            text-shadow: 0 0 16px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Infinity Stones Interaction */
+        .infinity-stone {
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .infinity-stone:hover {
+            transform: scale(1.4) rotate(15deg);
+            filter: drop-shadow(0 0 12px currentColor);
+        }
+        .infinity-stone.collected {
+            opacity: 0.2;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
+
+        /* Angular Polygon Button Clip */
+        .clip-stark-btn {
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+        }
+
+        /* Glowing Arc Reactor Animation Pulse */
+        @keyframes arcPulseDark {
+            0%, 100% { transform: scale(1); opacity: 0.7; box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+            50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 50px rgba(0, 240, 255, 0.6); }
+        }
+        .animate-arc-dark {
+            animation: arcPulseDark 3.5s infinite ease-in-out;
+        }
+
+        /* Scanline HUD Overlay */
+        .scanline-bg {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+        }
+
+        /* Custom Reticle Mouse Pointer Styles */
+        @media (hover: hover) and (pointer: fine) {
+            body, a, button, input, select, .infinity-stone, .dark-stark-card {
+                cursor: none !important;
+            }
+        }
+
+        .cursor-hover-active #cursorRing {
+            transform: translate(-50%, -50%) scale(1.8) rotate(45deg) !important;
+            border-color: #FF2A5F !important;
+            box-shadow: 0 0 20px rgba(255, 42, 95, 0.8) !important;
+        }
+
+        .cursor-hover-active #cursorDot {
+            transform: translate(-50%, -50%) scale(1.5) !important;
+            background-color: #00F0FF !important;
+            box-shadow: 0 0 12px rgba(0, 240, 255, 1) !important;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-rose-600 selection:text-white dark bg-[#05070c] text-slate-100">
+
+    <div id="cursorRing" class="fixed top-0 left-0 w-8 h-8 rounded-full border border-stark-accent/80 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-all duration-100 ease-out shadow-[0_0_12px_rgba(0,240,255,0.6)] hidden md:block">
+        <div class="absolute inset-0 rounded-full border border-dashed border-stark-heroRed/60 animate-spin" style="animation-duration: 6s;"></div>
+    </div>
+    <div id="cursorDot" class="fixed top-0 left-0 w-2 h-2 rounded-full bg-stark-heroRed pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 shadow-[0_0_8px_rgba(236,29,36,0.9)] hidden md:block"></div>
+
+    <!-- Quantum Canvas Background -->
+    <canvas id="starkCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-70"></canvas>
+    <div class="fixed inset-0 pointer-events-none z-0 scanline-bg opacity-30"></div>
+
+    <header class="sticky top-0 z-50 bg-[#05070c]/90 backdrop-blur-md border-b border-white/10 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 bg-stark-heroRed text-white flex items-center justify-center font-marvel text-2xl font-bold rounded shadow-red-glow group-hover:scale-105 transition-transform">
+                    GFG
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-hud text-[10px] tracking-widest text-stark-accent font-bold flex items-center gap-1">
+                        BENNETT UNIVERSITY <i class="fa-solid fa-atom text-stark-heroRed animate-spin"></i>
+                    </span>
+                    <span class="font-marvel text-2xl tracking-wide text-white group-hover:text-stark-heroRed transition-colors">
+                        MULTIVERSE OF CODE
+                    </span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 font-hud text-xs tracking-wider text-slate-300 font-semibold">
+                <a href="#about" class="hover:text-stark-accent transition-colors flex items-center gap-1">
+                    <span class="text-stark-heroRed">//</span> OVERVIEW
+                </a>
+                <a href="#arenas" class="hover:text-stark-accent transition-colors flex items-center gap-1">
+                    <span class="text-stark-heroRed">//</span> ARENAS
+                </a>
+                <a href="#hoodies" class="hover:text-stark-accent transition-colors flex items-center gap-1">
+                    <span class="text-stark-heroRed">//</span> HOODIES
+                </a>
+                <a href="#schedule" class="hover:text-stark-accent transition-colors flex items-center gap-1">
+                    <span class="text-stark-heroRed">//</span> TIMELINE
+                </a>
+                <a href="#id-pass" class="hover:text-stark-accent transition-colors flex items-center gap-1">
+                    <span class="text-stark-heroRed">//</span> CLEARANCE PASS
+                </a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                
+                <!-- Audio SFX Toggle -->
+                <button id="audioToggleBtn" onclick="toggleAudioEngine()" class="px-3 py-2 border border-slate-700 rounded-lg bg-slate-900/90 text-slate-200 hover:border-stark-accent hover:text-stark-accent text-xs font-hud transition-all flex items-center gap-2 shadow-sm" title="Toggle JARVIS Audio SFX">
+                    <i id="audioIcon" class="fa-solid fa-volume-xmark text-slate-500"></i>
+                    <span class="hidden sm:inline font-bold">JARVIS SFX</span>
+                </button>
+
+                <!-- Marvel Jukebox Dropdown Switcher -->
+                <div class="relative group">
+                    <button id="themeSongBtn" onclick="toggleCurrentMarvelTheme()" class="px-3.5 py-2 border border-rose-600/80 rounded-lg bg-rose-950/80 text-rose-300 hover:border-stark-heroRed hover:text-white text-xs font-hud transition-all flex items-center gap-2 shadow-red-glow">
+                        <i id="themeSongIcon" class="fa-solid fa-music text-stark-heroRed animate-pulse"></i>
+                        <span id="themeSongText" class="font-bold">PRAY FOR ME</span>
+                        <span id="themeWaveBars" class="hidden items-end gap-0.5 h-3">
+                            <span class="w-0.5 bg-stark-heroRed h-full animate-bounce"></span>
+                            <span class="w-0.5 bg-stark-accent h-2/3 animate-bounce" style="animation-delay: 0.15s"></span>
+                            <span class="w-0.5 bg-stark-gold h-4/5 animate-bounce" style="animation-delay: 0.3s"></span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-slate-400"></i>
+                    </button>
+
+                    <!-- Jukebox Menu -->
+                    <div class="absolute right-0 top-full mt-2 w-64 bg-slate-900/95 border-2 border-stark-heroRed rounded-xl p-2 shadow-2xl backdrop-blur-md hidden group-hover:block z-50 font-hud text-xs space-y-1">
+                        <div class="text-[9px] text-slate-400 font-bold px-2 py-1 tracking-widest uppercase border-b border-slate-800">
+                            🎵 SELECT MARVEL JUKEBOX TRACK
+                        </div>
+                        <button onclick="playMarvelTheme('prayforme')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-purple-950/80 text-white flex items-center gap-2 transition-colors">
+                            <span class="text-purple-400">🐾</span>
+                            <span>PRAY FOR ME (BLACK PANTHER)</span>
+                        </button>
+                        <button onclick="playMarvelTheme('avengers')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-rose-950/80 text-white flex items-center gap-2 transition-colors">
+                            <span class="text-stark-heroRed">🛡️</span>
+                            <span>AVENGERS ENDGAME THEME</span>
+                        </button>
+                        <button onclick="playMarvelTheme('xmen')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-cyan-950/80 text-white flex items-center gap-2 transition-colors">
+                            <span class="text-stark-accent">⚡</span>
+                            <span>X-MEN '97 SYNTH RIFF</span>
+                        </button>
+                        <button onclick="playMarvelTheme('spiderman')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-amber-950/80 text-white flex items-center gap-2 transition-colors">
+                            <span class="text-stark-gold">🕷️</span>
+                            <span>SPIDER-MAN SWING THEME</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Infinity Stones Tracker -->
+                <div class="hidden xl:flex items-center bg-slate-900/90 px-3 py-1.5 rounded-full border border-slate-700 text-xs font-hud gap-2 shadow-inner">
+                    <span class="text-slate-400 text-[10px] font-bold">STONES:</span>
+                    <div class="flex items-center space-x-1.5">
+                        <i id="hudStone-space" class="fa-solid fa-gem text-blue-400 opacity-20 text-[11px]" title="Space Stone"></i>
+                        <i id="hudStone-mind" class="fa-solid fa-gem text-amber-400 opacity-20 text-[11px]" title="Mind Stone"></i>
+                        <i id="hudStone-reality" class="fa-solid fa-gem text-rose-500 opacity-20 text-[11px]" title="Reality Stone"></i>
+                        <i id="hudStone-power" class="fa-solid fa-gem text-purple-400 opacity-20 text-[11px]" title="Power Stone"></i>
+                        <i id="hudStone-time" class="fa-solid fa-gem text-emerald-400 opacity-20 text-[11px]" title="Time Stone"></i>
+                        <i id="hudStone-soul" class="fa-solid fa-gem text-orange-400 opacity-20 text-[11px]" title="Soul Stone"></i>
+                    </div>
+                </div>
+
+                <!-- Pass Generator CTA -->
+                <a href="#id-pass" onclick="playSynthSound('click')" class="clip-stark-btn bg-stark-heroRed hover:bg-stark-darkRed text-white font-hud font-bold px-5 py-2.5 text-xs tracking-wider transition-all shadow-lg shadow-rose-900/40 hover:shadow-red-glow flex items-center gap-2">
+                    <span>GENERATE PASS</span>
+                    <i class="fa-solid fa-arrow-right text-stark-gold"></i>
+                </a>
+
+                <!-- Mobile Drawer Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-200 p-2 text-xl">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobileDrawer" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 font-hud text-xs space-y-3">
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-stark-accent"><span class="text-stark-heroRed">//</span> OVERVIEW</a>
+            <a href="#arenas" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-stark-accent"><span class="text-stark-heroRed">//</span> ARENAS</a>
+            <a href="#hoodies" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-stark-accent"><span class="text-stark-heroRed">//</span> MARVEL HOODIES</a>
+            <a href="#schedule" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-stark-accent"><span class="text-stark-heroRed">//</span> TIMELINE</a>
+            <a href="#id-pass" onclick="toggleMobileMenu()" class="block text-slate-300 hover:text-stark-accent"><span class="text-stark-heroRed">//</span> PASS GENERATOR</a>
+        </div>
+    </header>
+
+    <section class="relative min-h-[90vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden z-10">
+        
+        <!-- Glowing Dark Arc Reactor Background Overlay -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[650px] h-[340px] sm:h-[650px] rounded-full border border-cyan-500/30 animate-arc-dark pointer-events-none flex items-center justify-center">
+            <div class="w-[82%] h-[82%] rounded-full border border-dashed border-rose-500/30"></div>
+            <div class="w-[50%] h-[50%] rounded-full border-2 border-amber-500/30"></div>
+        </div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10 space-y-8">
+            
+            <!-- Chapter Badge -->
+            <div class="inline-flex items-center space-x-2 bg-slate-900/90 border border-slate-700 px-4 py-1.5 rounded-full text-xs font-hud font-semibold text-slate-300 shadow-lg">
+                <span class="w-2.5 h-2.5 rounded-full bg-stark-heroRed animate-ping"></span>
+                <span>GEEKSFORGEEKS STUDENT CHAPTER • BENNETT UNIVERSITY</span>
+                <!-- Hidden Stone #1: Space Stone -->
+                <i class="fa-solid fa-gem text-blue-400 ml-2 infinity-stone" id="stone-space" onclick="collectInfinityStone('space')" title="Space Stone Hidden Here!"></i>
+            </div>
+
+            <div class="space-y-3">
+                <h2 class="font-hud text-stark-accent text-xs sm:text-sm md:text-base tracking-[0.3em] font-bold uppercase">
+                    36-HOUR MARVEL CODE HACKATHON & EXPO
+                </h2>
+                <h1 class="font-marvel text-6xl sm:text-8xl md:text-9xl tracking-wider uppercase text-white leading-none drop-shadow-lg">
+                    MULTIVERSE <span class="text-stark-heroRed text-glow-red">OF CODE</span>
+                </h1>
+                <p class="font-sans text-slate-300 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed font-light">
+                    Step inside the high-tech laboratories of Stark Industries. Assemble your team of tech heroes, deploy neural AI models, quantum algorithms, and cloud stormbreakers to shape the future.
+                </p>
+            </div>
+
+            <!-- Stats Ribbon -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto py-2">
+                <div class="dark-stark-card p-4 rounded-xl text-center border-l-4 border-l-stark-accent">
+                    <span class="block font-marvel text-3xl sm:text-4xl text-stark-accent text-glow-cyan">₹1,50,000+</span>
+                    <span class="font-hud text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider">Cash Bounty Pool</span>
+                </div>
+                <div class="dark-stark-card p-4 rounded-xl text-center border-l-4 border-l-stark-heroRed">
+                    <span class="block font-marvel text-3xl sm:text-4xl text-stark-heroRed text-glow-red">36 HOURS</span>
+                    <span class="font-hud text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider">Non-Stop Coding</span>
+                </div>
+                <div class="dark-stark-card p-4 rounded-xl text-center border-l-4 border-l-stark-gold">
+                    <span class="block font-marvel text-3xl sm:text-4xl text-stark-gold text-glow-gold">5 ARENAS</span>
+                    <span class="font-hud text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider">Problem Tracks</span>
+                </div>
+                <div class="dark-stark-card p-4 rounded-xl text-center border-l-4 border-l-stark-purple">
+                    <span class="block font-marvel text-3xl sm:text-4xl text-stark-purple">TOP 50</span>
+                    <span class="font-hud text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider">Marvel Hoodies</span>
+                </div>
+            </div>
+
+            <!-- Countdown Box -->
+            <div class="dark-stark-card max-w-xl mx-auto p-5 rounded-2xl border border-cyan-500/40 space-y-2">
+                <span class="font-hud text-xs text-stark-accent font-bold tracking-wider flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-stopwatch text-stark-heroRed animate-bounce"></i> MISSION LAUNCH COUNTDOWN
+                </span>
+                <div class="grid grid-cols-4 gap-2 text-center font-hud">
+                    <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800">
+                        <span id="cd-days" class="font-marvel text-3xl sm:text-4xl text-slate-100">00</span>
+                        <span class="block text-[9px] text-slate-400 font-bold tracking-wider">DAYS</span>
+                    </div>
+                    <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800">
+                        <span id="cd-hours" class="font-marvel text-3xl sm:text-4xl text-stark-gold">00</span>
+                        <span class="block text-[9px] text-slate-400 font-bold tracking-wider">HOURS</span>
+                    </div>
+                    <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800">
+                        <span id="cd-mins" class="font-marvel text-3xl sm:text-4xl text-stark-accent">00</span>
+                        <span class="block text-[9px] text-slate-400 font-bold tracking-wider">MINS</span>
+                    </div>
+                    <div class="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800">
+                        <span id="cd-secs" class="font-marvel text-3xl sm:text-4xl text-stark-heroRed">00</span>
+                        <span class="block text-[9px] text-slate-400 font-bold tracking-wider">SECS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                <a href="#id-pass" onclick="playSynthSound('click')" class="clip-stark-btn bg-stark-heroRed hover:bg-stark-darkRed text-white font-hud font-bold px-8 py-4 text-sm tracking-widest w-full sm:w-auto text-center shadow-lg shadow-rose-900/40 hover:shadow-red-glow transition-all flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-id-badge text-stark-gold text-lg"></i>
+                    <span>CLAIM S.H.I.E.L.D PASS</span>
+                </a>
+                
+                <button onclick="cycleNextMarvelTheme()" class="clip-stark-btn bg-rose-950/90 hover:bg-rose-900 border-2 border-stark-heroRed text-white font-hud font-bold px-8 py-4 text-sm tracking-widest w-full sm:w-auto text-center shadow-red-glow transition-all flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-compact-disc text-stark-purple text-lg animate-spin" style="animation-duration: 4s;"></i>
+                    <span id="heroThemeBtnText">PLAY: PRAY FOR ME (BLACK PANTHER)</span>
+                </button>
+
+                <a href="#arenas" onclick="playSynthSound('click')" class="clip-stark-btn bg-slate-900/90 hover:bg-slate-800 border-2 border-stark-accent text-stark-accent font-hud font-bold px-8 py-4 text-sm tracking-widest w-full sm:w-auto text-center shadow-stark-glow transition-all flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-compass"></i>
+                    <span>EXPLORE ARENAS</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-rose-950/60 border border-rose-800/80 text-stark-heroRed font-hud text-xs font-bold rounded-md">
+                    <i class="fa-solid fa-shield-halved text-stark-heroRed"></i> MISSION PROTOCOL
+                    <!-- Hidden Stone #2: Mind Stone -->
+                    <i class="fa-solid fa-gem text-amber-400 ml-2 infinity-stone" id="stone-mind" onclick="collectInfinityStone('mind')" title="Mind Stone Hidden Here!"></i>
+                </div>
+
+                <h2 class="font-marvel text-5xl sm:text-6xl text-white tracking-wide leading-tight">
+                    WHERE TECHNOLOGY MEETS <span class="text-stark-heroRed text-glow-red">HEROIC INNOVATION</span>
+                </h2>
+
+                <p class="text-slate-300 font-sans leading-relaxed text-base">
+                    Organized by the GeeksForGeeks Student Chapter at Bennett University, the Multiverse of Code brings together coders, AI architects, blockchain developers, and system designers to hack cutting-edge solutions under high-energy conditions.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="dark-stark-card p-4 rounded-xl flex items-start space-x-3 border-l-2 border-l-rose-500">
+                        <div class="p-3 bg-rose-950/80 text-stark-heroRed rounded-lg">
+                            <i class="fa-solid fa-microchip text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-hud text-xs text-white font-bold">STARK LAB TOOLS</h4>
+                            <p class="text-xs text-slate-400 mt-1">Access advanced AI APIs, cloud infrastructure & hardware development kits.</p>
+                        </div>
+                    </div>
+
+                    <div class="dark-stark-card p-4 rounded-xl flex items-start space-x-3 border-l-2 border-l-cyan-500">
+                        <div class="p-3 bg-cyan-950/80 text-stark-accent rounded-lg">
+                            <i class="fa-solid fa-user-tie text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-hud text-xs text-white font-bold">EXPERT MENTORSHIP</h4>
+                            <p class="text-xs text-slate-400 mt-1">Direct feedback and 1-on-1 code reviews from engineers at Google & Microsoft.</p>
+                        </div>
+                    </div>
+
+                    <div class="dark-stark-card p-4 rounded-xl flex items-start space-x-3 border-l-2 border-l-amber-500">
+                        <div class="p-3 bg-amber-950/80 text-stark-gold rounded-lg">
+                            <i class="fa-solid fa-trophy text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-hud text-xs text-white font-bold">GRAND BOUNTIES</h4>
+                            <p class="text-xs text-slate-400 mt-1">Cash prizes, custom 3D gauntlet trophies, mechanical keyboards & swags.</p>
+                        </div>
+                    </div>
+
+                    <div class="dark-stark-card p-4 rounded-xl flex items-start space-x-3 border-l-2 border-l-purple-500">
+                        <div class="p-3 bg-purple-950/80 text-stark-purple rounded-lg">
+                            <i class="fa-solid fa-utensils text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-hud text-xs text-white font-bold">24/7 HOSPITALITY</h4>
+                            <p class="text-xs text-slate-400 mt-1">Free gourmet meals, high-speed WiFi 6, midnight energy drinks & rest pods.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-5 relative">
+                <div class="dark-stark-card p-6 rounded-2xl border-2 border-cyan-500/40 relative overflow-hidden">
+                    <div class="flex justify-between items-center pb-4 border-b border-slate-800 text-xs font-hud font-bold">
+                        <span class="text-stark-accent"><i class="fa-solid fa-terminal mr-1"></i> JARVIS_DIAGNOSTICS</span>
+                        <span class="text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded border border-emerald-800">ONLINE</span>
+                    </div>
+
+                    <div class="py-6 space-y-4 font-hud text-xs">
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-slate-400">
+                                <span>CAMPUS LOCATION</span>
+                                <span class="text-slate-100 font-bold">BENNETT UNIV, GREATER NOIDA</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-stark-accent h-full w-[100%] shadow-stark-glow"></div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-slate-400">
+                                <span>HACKATHON DURATION</span>
+                                <span class="text-stark-gold font-bold">36 HOURS CONTINUOUS</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-stark-gold h-full w-[95%]"></div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-slate-400">
+                                <span>TEAM FORMATION</span>
+                                <span class="text-stark-heroRed font-bold">2 TO 4 MEMBERS / TEAM</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                <div class="bg-stark-heroRed h-full w-[85%]"></div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2">
+                            <div class="w-12 h-12 mx-auto rounded-full bg-cyan-950 text-stark-accent flex items-center justify-center text-xl font-bold border border-cyan-800">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <h5 class="text-white font-bold text-sm">STARK TOWER BENNETT CAMPUS</h5>
+                            <p class="text-[11px] text-slate-400 font-sans">
+                                Complete with air-conditioned arenas, high-concurrency fiber networks, gaming lounge, and sleeping areas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="arenas" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="text-center space-y-3 mb-16">
+            <span class="font-hud text-xs text-stark-accent font-bold tracking-widest uppercase">
+                // SELECT YOUR DOMAIN BATTLEFIELD
+            </span>
+            <h2 class="font-marvel text-5xl sm:text-7xl text-white tracking-wide">
+                PROBLEM <span class="text-stark-heroRed text-glow-red">ARENAS</span>
+            </h2>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm font-sans">
+                Each arena represents a core Marvel hero track. Choose the problem statement that matches your team's powers.
+            </p>
+            <!-- Hidden Stone #3: Reality Stone -->
+            <i class="fa-solid fa-gem text-rose-500 text-sm infinity-stone inline-block mt-1" id="stone-reality" onclick="collectInfinityStone('reality')" title="Reality Stone Hidden Here!"></i>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Track 01: Iron Man -->
+            <div class="dark-stark-card rounded-2xl border border-slate-800 overflow-hidden flex flex-col justify-between group">
+                <div class="relative h-48 w-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=600&q=80" alt="Iron Man Track" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/E62429/FFFFFF?text=Iron+Man+AI'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c1220] via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-stark-heroRed text-white font-hud text-[10px] font-bold px-2.5 py-1 rounded shadow">
+                        TRACK 01
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-white font-marvel text-2xl tracking-wide">
+                        IRON MAN: AI & NEURAL HUD
+                    </span>
+                </div>
+                <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                    <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                        Construct autonomous AI agents, multi-modal vision models, and Jarvis-inspired personal assistant workflows to automate complex real-world workflows.
+                    </p>
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 font-hud text-[10px] text-slate-300">
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">LLM Agents</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Computer Vision</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Neural Tools</span>
+                        </div>
+                        <button onclick="openArenaModal('ironman')" class="mt-4 w-full py-2.5 bg-rose-950/80 hover:bg-stark-heroRed hover:text-white text-stark-heroRed font-hud text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-2 border border-rose-800">
+                            <span>VIEW BRIEF</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track 02: Spider-Man -->
+            <div class="dark-stark-card rounded-2xl border border-slate-800 overflow-hidden flex flex-col justify-between group">
+                <div class="relative h-48 w-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?auto=format&fit=crop&w=600&q=80" alt="Spider-Man Track" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/0EA5E9/FFFFFF?text=Spider-Man+Web'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c1220] via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-stark-accent text-slate-950 font-hud text-[10px] font-bold px-2.5 py-1 rounded shadow">
+                        TRACK 02
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-white font-marvel text-2xl tracking-wide">
+                        SPIDER-MAN: WEB UX ODYSSEY
+                    </span>
+                </div>
+                <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                    <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                        Weave hyper-scalable web ecosystems, real-time community platforms, accessible progressive web apps, and intuitive UI interactions.
+                    </p>
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 font-hud text-[10px] text-slate-300">
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">React/Next.js</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">WebSockets</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">UI/UX Design</span>
+                        </div>
+                        <button onclick="openArenaModal('spiderman')" class="mt-4 w-full py-2.5 bg-cyan-950/80 hover:bg-stark-accent hover:text-slate-950 text-stark-accent font-hud text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-2 border border-cyan-800">
+                            <span>VIEW BRIEF</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track 03: Doctor Strange Sanctum Sanctorum -->
+            <div class="dark-stark-card rounded-2xl border border-purple-900/60 hover:border-stark-purple/80 overflow-hidden flex flex-col justify-between group shadow-[0_0_20px_rgba(168,85,247,0.15)] hover:shadow-[0_0_35px_rgba(168,85,247,0.35)] transition-all duration-500 relative bg-[#05070c]">
+                <div class="relative h-52 w-full overflow-hidden">
+                    <img src="http://www.impawards.com/2016/posters/doctor_strange.jpg" alt="Doctor Strange Sanctum Sanctorum Window" class="w-full h-full object-cover group-hover:scale-110 filter brightness-[0.7] contrast-[1.25] group-hover:brightness-90 transition-all duration-700" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#05070c] via-[#0c1220]/70 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-950/50 via-transparent to-emerald-950/40 mix-blend-color-dodge pointer-events-none"></div>
+                    <div class="absolute top-3 left-3 flex items-center gap-2">
+                        <span class="bg-stark-purple/90 backdrop-blur-md text-white font-hud text-[10px] font-bold px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(168,85,247,0.5)] border border-purple-400/30">
+                            TRACK 03
+                        </span>
+                        <span class="bg-black/80 backdrop-blur-md text-emerald-400 font-hud text-[9px] font-semibold px-2 py-0.5 rounded border border-emerald-500/40 flex items-center gap-1 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> SANCTUM NODE
+                        </span>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3">
+                        <span class="text-white font-marvel text-2xl tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                            DOCTOR STRANGE: QUANTUM & WEB3
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 space-y-4 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#0c1220]/95 to-[#05070c]">
+                    <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                        Manipulate decentralized ledgers, zero-knowledge security protocols, smart contract execution networks, and cryptographic multiverses in an ultra-secure void environment.
+                    </p>
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 font-hud text-[10px] text-slate-300">
+                            <span class="bg-purple-950/60 text-purple-300 px-2 py-0.5 rounded border border-purple-800/60 shadow-sm">Smart Contracts</span>
+                            <span class="bg-emerald-950/60 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800/60 shadow-sm">ZK-Proofs</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Web3 Protocols</span>
+                        </div>
+                        <button onclick="openArenaModal('strange')" class="mt-4 w-full py-2.5 bg-purple-950/90 hover:bg-stark-purple hover:text-white text-stark-purple font-hud text-xs font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 border border-purple-800/80 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                            <span>VIEW MYSTIC BRIEF</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track 04: Thor Tempest -->
+            <div class="dark-stark-card rounded-2xl border border-amber-900/60 hover:border-amber-500/80 overflow-hidden flex flex-col justify-between group shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_35px_rgba(255,215,0,0.35)] transition-all duration-500 relative bg-[#05070c]">
+                <div class="relative h-52 w-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=800&q=80" alt="Thor Lightning Tempest Track" class="w-full h-full object-cover group-hover:scale-110 filter brightness-[0.65] contrast-[1.3] group-hover:brightness-85 transition-all duration-700" onerror="this.src='https://placehold.co/600x400/D97706/FFFFFF?text=Thor+Lightning'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#05070c] via-[#0c1220]/70 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-950/50 via-transparent to-blue-950/40 mix-blend-color-dodge pointer-events-none"></div>
+                    <div class="absolute top-3 left-3 flex items-center gap-2">
+                        <span class="bg-amber-500/90 backdrop-blur-md text-slate-950 font-hud text-[10px] font-bold px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(255,215,0,0.5)] border border-amber-300/40">
+                            TRACK 04
+                        </span>
+                        <span class="bg-black/80 backdrop-blur-md text-amber-400 font-hud text-[9px] font-semibold px-2 py-0.5 rounded border border-amber-500/40 flex items-center gap-1 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> BIFROST CLOUD
+                        </span>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3">
+                        <span class="text-white font-marvel text-2xl tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                            THOR: CLOUD STORMBREAKER
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 space-y-4 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#0c1220]/95 to-[#05070c]">
+                    <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                        Architect ultra-resilient microservices, cloud pipeline automation, Kubernetes clusters, and high-throughput cybersecurity engines.
+                    </p>
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 font-hud text-[10px] text-slate-300">
+                            <span class="bg-amber-950/60 text-amber-300 px-2 py-0.5 rounded border border-amber-800/60 shadow-sm">AWS / GCP</span>
+                            <span class="bg-blue-950/60 text-blue-300 px-2 py-0.5 rounded border border-blue-800/60 shadow-sm">Kubernetes</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">DevOps</span>
+                        </div>
+                        <button onclick="openArenaModal('thor')" class="mt-4 w-full py-2.5 bg-amber-950/90 hover:bg-amber-500 hover:text-slate-950 text-amber-400 font-hud text-xs font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 border border-amber-800/80 shadow-[0_0_15px_rgba(255,215,0,0.2)]">
+                            <span>VIEW STORMBREAKER BRIEF</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track 05: Captain America Vibranium -->
+            <div class="dark-stark-card rounded-2xl border border-teal-900/60 hover:border-teal-500/80 overflow-hidden flex flex-col justify-between group shadow-[0_0_20px_rgba(20,184,166,0.15)] hover:shadow-[0_0_35px_rgba(20,184,166,0.35)] transition-all duration-500 relative bg-[#05070c]">
+                <div class="relative h-52 w-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=800&q=80" alt="Captain America Cyber Stealth Shield Track" class="w-full h-full object-cover group-hover:scale-110 filter brightness-[0.6] contrast-[1.3] group-hover:brightness-85 transition-all duration-700" onerror="this.src='https://placehold.co/600x400/0D9488/FFFFFF?text=Captain+America+Shield'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#05070c] via-[#0c1220]/70 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-teal-950/50 via-transparent to-blue-950/40 mix-blend-color-dodge pointer-events-none"></div>
+                    <div class="absolute top-3 left-3 flex items-center gap-2">
+                        <span class="bg-teal-500/90 backdrop-blur-md text-slate-950 font-hud text-[10px] font-bold px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(20,184,166,0.5)] border border-teal-300/40">
+                            TRACK 05
+                        </span>
+                        <span class="bg-black/80 backdrop-blur-md text-teal-400 font-hud text-[9px] font-semibold px-2 py-0.5 rounded border border-teal-500/40 flex items-center gap-1 shadow">
+                            <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-ping"></span> VIBRANIUM PROTOCOL
+                        </span>
+                    </div>
+                    <div class="absolute bottom-3 left-3 right-3">
+                        <span class="text-white font-marvel text-2xl tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                            CAPTAIN AMERICA: OPEN SOURCE SHIELD
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 space-y-4 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#0c1220]/95 to-[#05070c]">
+                    <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                        Develop open-source software serving humanity: public healthcare tools, disaster management networks, accessible tech, and green energy apps.
+                    </p>
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 font-hud text-[10px] text-slate-300">
+                            <span class="bg-teal-950/60 text-teal-300 px-2 py-0.5 rounded border border-teal-800/60 shadow-sm">Social Good</span>
+                            <span class="bg-cyan-950/60 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800/60 shadow-sm">Accessibility</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Open Data</span>
+                        </div>
+                        <button onclick="openArenaModal('cap')" class="mt-4 w-full py-2.5 bg-teal-950/90 hover:bg-teal-500 hover:text-slate-950 text-teal-400 font-hud text-xs font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2 border border-teal-800/80 shadow-[0_0_15px_rgba(20,184,166,0.2)]">
+                            <span>VIEW VIBRANIUM BRIEF</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track 06: Multiverse Wildcard -->
+            <div class="dark-stark-card rounded-2xl border border-slate-800 overflow-hidden flex flex-col justify-between group">
+                <div class="relative h-48 w-full overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" alt="Multiverse Wildcard Track" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/475569/FFFFFF?text=Multiverse+Wildcard'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0c1220] via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-slate-700 text-white font-hud text-[10px] font-bold px-2.5 py-1 rounded shadow">
+                        WILDCARD
+                    </span>
+                    <span class="absolute bottom-3 left-3 text-white font-marvel text-2xl tracking-wide">
+                        MULTIVERSE WILDCARD
+                    </span>
+                </div>
+                <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                    <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                        Have a groundbreaking product idea outside the defined tracks? Pitch your original innovation freely to the Illuminati Jury.
+                    </p>
+                    <div>
+                        <div class="flex flex-wrap gap-1.5 font-hud text-[10px] text-slate-300">
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Any Tech Stack</span>
+                            <span class="bg-slate-900 px-2 py-0.5 rounded border border-slate-800">Open Innovation</span>
+                        </div>
+                        <button onclick="openArenaModal('wildcard')" class="mt-4 w-full py-2.5 bg-slate-900 hover:bg-slate-700 hover:text-white text-slate-300 font-hud text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-2 border border-slate-700">
+                            <span>VIEW BRIEF</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="hoodies" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="dark-stark-card p-6 sm:p-10 rounded-2xl border-2 border-stark-heroRed/80 bg-gradient-to-r from-rose-950/50 via-slate-900 to-cyan-950/50 shadow-red-glow relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                
+                <div class="space-y-4 text-center lg:text-left max-w-xl">
+                    <div class="inline-flex items-center space-x-2 bg-stark-heroRed/20 border border-stark-heroRed px-3 py-1 rounded-full text-xs font-hud font-bold text-stark-heroRed uppercase tracking-wider">
+                        <i class="fa-solid fa-fire text-amber-400 animate-bounce"></i> TOP 50 RANKERS SPECIAL MERCH
+                    </div>
+                    <h3 class="font-marvel text-4xl sm:text-5xl text-white tracking-wide">
+                        WIN LIMITED EDITION <span class="text-stark-heroRed text-glow-red">MARVEL HOODIES</span>
+                    </h3>
+                    <p class="font-sans text-slate-300 text-sm leading-relaxed">
+                        Every student team ranking in the <strong>Top 50 of the Multiverse Leaderboard</strong> will take home premium, custom-crafted GeeksForGeeks x Stark Expo Marvel Hoodies equipped with embroidered HUD motifs and heavyweight cotton fleece.
+                    </p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-center font-hud text-xs">
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+                            <span class="block text-stark-accent font-bold text-base">50 HOODIES</span>
+                            <span class="text-[10px] text-slate-400 uppercase">Guaranteed Pool</span>
+                        </div>
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+                            <span class="block text-amber-400 font-bold text-base">3 VARIANTS</span>
+                            <span class="text-[10px] text-slate-400 uppercase">Marvel Themes</span>
+                        </div>
+                        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800 col-span-2 sm:col-span-1">
+                            <span class="block text-stark-heroRed font-bold text-base">380 GSM</span>
+                            <span class="text-[10px] text-slate-400 uppercase">Heavy Fleece</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hoodie Gallery Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full lg:w-auto">
+                    
+                    <!-- Hoodie Variant 1 -->
+                    <div class="dark-stark-card p-3 rounded-xl border border-slate-700 hover:border-stark-accent transition-all group relative overflow-hidden">
+                        <div class="relative h-48 w-36 mx-auto sm:w-40 rounded-lg overflow-hidden bg-slate-950">
+                            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" alt="Iron Man Arc Hoodie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x500/0c1220/00f0ff?text=Iron+Man+Hoodie'">
+                            <span class="absolute top-2 left-2 bg-stark-accent text-slate-950 font-hud text-[9px] font-bold px-2 py-0.5 rounded shadow">
+                                STARK ARC EDITION
+                            </span>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <h4 class="font-marvel text-lg text-white">IRON MAN ARC HOODIE</h4>
+                            <span class="font-hud text-[10px] text-stark-accent font-bold">CYAN HUD ACCENTS</span>
+                        </div>
+                    </div>
+
+                    <!-- Hoodie Variant 2 -->
+                    <div class="dark-stark-card p-3 rounded-xl border border-slate-700 hover:border-stark-heroRed transition-all group relative overflow-hidden">
+                        <div class="relative h-48 w-36 mx-auto sm:w-40 rounded-lg overflow-hidden bg-slate-950">
+                            <img src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=500&q=80" alt="Avengers Quantum Hoodie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x500/0c1220/ec1d24?text=Quantum+Hoodie'">
+                            <span class="absolute top-2 left-2 bg-stark-heroRed text-white font-hud text-[9px] font-bold px-2 py-0.5 rounded shadow">
+                                QUANTUM REALM
+                            </span>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <h4 class="font-marvel text-lg text-white">AVENGERS CORE HOODIE</h4>
+                            <span class="font-hud text-[10px] text-stark-heroRed font-bold">CRIMSON EMBROIDERED</span>
+                        </div>
+                    </div>
+
+                    <!-- Hoodie Variant 3 -->
+                    <div class="dark-stark-card p-3 rounded-xl border border-slate-700 hover:border-stark-gold transition-all group relative overflow-hidden">
+                        <div class="relative h-48 w-36 mx-auto sm:w-40 rounded-lg overflow-hidden bg-slate-950">
+                            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" alt="S.H.I.E.L.D. Stealth Hoodie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x500/0c1220/ffd700?text=SHIELD+Hoodie'">
+                            <span class="absolute top-2 left-2 bg-stark-gold text-slate-950 font-hud text-[9px] font-bold px-2 py-0.5 rounded shadow">
+                                S.H.I.E.L.D STEALTH
+                            </span>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <h4 class="font-marvel text-lg text-white">STEALTH AGENT HOODIE</h4>
+                            <span class="font-hud text-[10px] text-stark-gold font-bold">OBSIDIAN & GOLD</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="schedule" class="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
+        <div class="text-center space-y-3 mb-12">
+            <span class="font-hud text-xs text-stark-accent font-bold tracking-widest uppercase">
+                // MISSION PROTOCOL SEQUENCE
+            </span>
+            <h2 class="font-marvel text-5xl sm:text-7xl text-white tracking-wide">
+                EVENT <span class="text-stark-accent text-glow-cyan">TIMELINE</span>
+            </h2>
+            <!-- Hidden Stone #4: Power Stone -->
+            <i class="fa-solid fa-gem text-purple-400 text-sm infinity-stone inline-block mt-1" id="stone-power" onclick="collectInfinityStone('power')" title="Power Stone Hidden Here!"></i>
+        </div>
+
+        <div class="flex justify-center space-x-3 mb-10 font-hud text-xs sm:text-sm">
+            <button id="day1Btn" onclick="switchScheduleDay(1)" class="px-6 py-3 rounded-lg border-2 border-stark-heroRed bg-stark-heroRed text-white font-bold transition-all shadow-red-glow">
+                DAY 01: ASSEMBLING
+            </button>
+            <button id="day2Btn" onclick="switchScheduleDay(2)" class="px-6 py-3 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 font-bold transition-all hover:border-stark-accent">
+                DAY 02: QUANTUM SPRINT
+            </button>
+            <button id="day3Btn" onclick="switchScheduleDay(3)" class="px-6 py-3 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 font-bold transition-all hover:border-stark-accent">
+                DAY 03: ENDGAME PITCH
+            </button>
+        </div>
+
+        <div class="dark-stark-card p-6 sm:p-10 rounded-2xl border border-slate-800 relative">
+            <div id="timelineContainer" class="space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-1/2 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-stark-heroRed before:via-stark-accent before:to-stark-gold">
+            </div>
+        </div>
+    </section>
+
+    <!-- S.H.I.E.L.D Clearance Pass Generator -->
+    <section id="id-pass" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="text-center space-y-3 mb-12">
+            <span class="font-hud text-xs text-stark-heroRed font-bold tracking-widest uppercase">
+                // S.H.I.E.L.D CLEARANCE PROTOCOL
+            </span>
+            <h2 class="font-marvel text-5xl sm:text-7xl text-white tracking-wide">
+                GENERATE YOUR <span class="text-stark-heroRed text-glow-red">HERO ID PASS</span>
+            </h2>
+            <p class="text-slate-400 max-w-xl mx-auto text-sm font-sans">
+                Customize your hero credentials to render your live S.H.I.E.L.D Event Ticket Pass with dynamic hero avatar graphics!
+            </p>
+            <!-- Hidden Stone #5: Time Stone -->
+            <i class="fa-solid fa-gem text-emerald-400 text-sm infinity-stone inline-block mt-1" id="stone-time" onclick="collectInfinityStone('time')" title="Time Stone Hidden Here!"></i>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <!-- Credentials Input Form -->
+            <div class="lg:col-span-5 dark-stark-card p-6 sm:p-8 rounded-2xl border-2 border-slate-800 space-y-5">
+                <h3 class="font-hud text-xs text-stark-accent font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-user-astronaut text-stark-heroRed"></i> HERO CREDENTIALS INPUT
+                </h3>
+
+                <div class="space-y-4 font-sans text-xs">
+                    <div>
+                        <label class="block text-slate-300 font-hud text-[11px] font-bold mb-1">HERO FULL NAME *</label>
+                        <input type="text" id="passNameInput" oninput="updateHeroPass()" value="Tony Stark" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:border-stark-heroRed focus:outline-none font-hud text-xs">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-hud text-[11px] font-bold mb-1">TEAM ALIAS / NAME *</label>
+                        <input type="text" id="passTeamInput" oninput="updateHeroPass()" value="Avenger Coders" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:border-stark-heroRed focus:outline-none font-hud text-xs">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-slate-300 font-hud text-[11px] font-bold mb-1">COLLEGE / UNIV</label>
+                            <input type="text" id="passCollegeInput" oninput="updateHeroPass()" value="Bennett University" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:border-stark-heroRed focus:outline-none font-hud text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-hud text-[11px] font-bold mb-1">HERO CLASS</label>
+                            <select id="passClassInput" onchange="updateHeroPass()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:border-stark-heroRed focus:outline-none font-hud text-xs font-bold">
+                                <option value="Iron Man">🦾 Iron Man (AI)</option>
+                                <option value="Spider-Man">🕷️ Spider-Man (Web)</option>
+                                <option value="Doctor Strange">🧙‍♂️ Doctor Strange (Quantum)</option>
+                                <option value="Thor">⚡ Thor (Cloud)</option>
+                                <option value="Captain America">🛡️ Cap America (OpenSource)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-hud text-[11px] font-bold mb-1">EMAIL / GFG ID</label>
+                        <input type="email" id="passEmailInput" oninput="updateHeroPass()" value="tony@stark.bu" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:border-stark-heroRed focus:outline-none font-hud text-xs">
+                    </div>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button onclick="claimClearancePass()" class="clip-stark-btn bg-stark-heroRed hover:bg-stark-darkRed text-white font-hud font-bold px-6 py-3 text-xs tracking-wider flex-1 transition-all text-center shadow-red-glow">
+                        CONFIRM REGISTRATION
+                    </button>
+                    <button onclick="copyClearanceCode()" class="px-4 py-3 border border-stark-accent text-stark-accent hover:bg-cyan-950/50 rounded-lg font-hud text-xs transition-all" title="Copy Ticket Clearance Code">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pass Badge Card Preview -->
+            <div class="lg:col-span-7 flex justify-center">
+                <div id="heroCardPreview" class="w-full max-w-md bg-slate-900/95 p-6 rounded-2xl border-2 border-stark-accent shadow-stark-glow relative overflow-hidden font-hud">
+                    
+                    <div class="flex justify-between items-start pb-4 border-b border-slate-800">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-stark-heroRed text-white font-marvel text-lg font-bold flex items-center justify-center rounded">
+                                GFG
+                            </div>
+                            <div>
+                                <span class="block text-[10px] text-stark-accent font-bold tracking-widest">S.H.I.E.L.D. CLEARANCE PASS</span>
+                                <span class="block text-[8px] text-slate-400 font-bold">BENNETT UNIVERSITY CHAPTER</span>
+                            </div>
+                        </div>
+                        <span class="text-xs text-stark-gold bg-amber-950/80 px-2.5 py-0.5 rounded border border-amber-800 font-bold">
+                            LEVEL 07
+                        </span>
+                    </div>
+
+                    <div class="py-6 flex items-center space-x-5">
+                        <div class="relative shrink-0">
+                            <div id="passAvatarBg" class="w-24 h-24 rounded-xl border-2 border-stark-heroRed overflow-hidden shadow-inner relative bg-rose-950">
+                                <img id="passAvatarImg" src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=300&q=80" alt="Hero Avatar" class="w-full h-full object-cover">
+                            </div>
+                            <span class="absolute -bottom-2 -right-2 bg-stark-accent text-slate-950 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase shadow" id="passClassTag">
+                                IRON MAN
+                            </span>
+                        </div>
+
+                        <div class="space-y-1.5 flex-1 overflow-hidden">
+                            <span class="text-[9px] text-slate-400 font-bold block tracking-widest uppercase">AGENT NAME</span>
+                            <h4 id="passNameDisplay" class="font-marvel text-2xl text-white tracking-wide truncate">TONY STARK</h4>
+                            
+                            <span class="text-[9px] text-slate-400 font-bold block tracking-widest uppercase pt-1">TEAM ALIAS</span>
+                            <p id="passTeamDisplay" class="text-xs text-stark-gold font-bold truncate">AVENGER CODERS</p>
+
+                            <div class="flex justify-between pt-1 text-[10px] text-slate-400 border-t border-slate-800">
+                                <span>ORG: <strong id="passCollegeDisplay" class="text-slate-200">BENNETT UNIV</strong></span>
+                                <span class="text-stark-accent font-bold" id="passCodeDisplay">#BU-8492</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-800 flex justify-between items-center text-[10px] text-slate-400">
+                        <div class="flex space-x-1 items-center">
+                            <i class="fa-solid fa-barcode text-2xl text-slate-300"></i>
+                            <span class="tracking-widest font-bold">36H-STARK-EXPO-2026</span>
+                        </div>
+                        <span class="text-emerald-400 font-bold animate-pulse">● AUTHORIZED</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mentors Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
+        <div class="text-center space-y-3 mb-16">
+            <span class="font-hud text-xs text-stark-accent font-bold tracking-widest uppercase">
+                // ILLUMINATI JURY
+            </span>
+            <h2 class="font-marvel text-5xl sm:text-7xl text-white tracking-wide">
+                MENTORS & <span class="text-stark-accent text-glow-cyan">JUDGES</span>
+            </h2>
+            <!-- Hidden Stone #6: Soul Stone -->
+            <i class="fa-solid fa-gem text-orange-400 text-sm infinity-stone inline-block mt-1" id="stone-soul" onclick="collectInfinityStone('soul')" title="Soul Stone Hidden Here!"></i>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="dark-stark-card p-6 rounded-xl text-center space-y-3">
+                <div class="w-16 h-16 mx-auto rounded-full bg-rose-950 text-stark-heroRed border border-rose-800 flex items-center justify-center text-2xl font-bold shadow-red-glow">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <h4 class="font-marvel text-2xl text-white">DR. A. SHARMA</h4>
+                <p class="font-hud text-[11px] text-stark-accent font-bold">PRINCIPAL AI ARCHITECT @ GOOGLE</p>
+                <p class="text-xs text-slate-400 font-sans">Autonomous AI Systems & Neural Networks Specialist.</p>
+            </div>
+
+            <div class="dark-stark-card p-6 rounded-xl text-center space-y-3">
+                <div class="w-16 h-16 mx-auto rounded-full bg-cyan-950 text-stark-accent border border-cyan-800 flex items-center justify-center text-2xl font-bold shadow-stark-glow">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <h4 class="font-marvel text-2xl text-white">R. VERMA</h4>
+                <p class="font-hud text-[11px] text-stark-gold font-bold">VP OF ENGINEERING @ MICROSOFT</p>
+                <p class="text-xs text-slate-400 font-sans">Cloud Infrastructure & DevOps Solutions Leader.</p>
+            </div>
+
+            <div class="dark-stark-card p-6 rounded-xl text-center space-y-3">
+                <div class="w-16 h-16 mx-auto rounded-full bg-amber-950 text-stark-gold border border-amber-800 flex items-center justify-center text-2xl font-bold shadow-gold-glow">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <h4 class="font-marvel text-2xl text-white">S. KAPOOR</h4>
+                <p class="font-hud text-[11px] text-stark-purple font-bold">HEAD OF PRODUCT @ CRED</p>
+                <p class="text-xs text-slate-400 font-sans">Product Design & High-Conversion UX Architect.</p>
+            </div>
+
+            <div class="dark-stark-card p-6 rounded-xl text-center space-y-3">
+                <div class="w-16 h-16 mx-auto rounded-full bg-purple-950 text-stark-purple border border-purple-800 flex items-center justify-center text-2xl font-bold shadow-purple-glow">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <h4 class="font-marvel text-2xl text-white">K. DESHMUKH</h4>
+                <p class="font-hud text-[11px] text-stark-heroRed font-bold">FOUNDER @ QUANTUM LABS</p>
+                <p class="text-xs text-slate-400 font-sans">Web3 Security Auditor & Protocol Engineer.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Box -->
+    <div id="arenaModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="dark-stark-card max-w-xl w-full p-6 sm:p-8 rounded-2xl border-2 border-stark-accent relative space-y-4 overflow-hidden bg-slate-900 shadow-2xl">
+            <button onclick="closeArenaModal()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white text-xl bg-slate-800 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="relative h-40 -mx-6 -mt-6 sm:-mx-8 sm:-mt-8 overflow-hidden mb-4">
+                <img id="modalCoverImg" src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+                <div class="absolute bottom-3 left-4 z-10">
+                    <span id="modalTrackTag" class="font-hud text-[10px] text-stark-accent font-bold tracking-widest block uppercase">TRACK 01</span>
+                    <h3 id="modalTitle" class="font-marvel text-3xl text-white">ARENA TITLE</h3>
+                </div>
+            </div>
+
+            <p id="modalDesc" class="text-xs text-slate-300 font-sans leading-relaxed">
+                Track details will load here dynamically.
+            </p>
+
+            <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+                <h5 class="font-hud text-xs text-stark-gold font-bold">EVALUATION CRITERIA</h5>
+                <ul class="text-xs text-slate-300 font-sans space-y-1">
+                    <li>• Technical Complexity & Execution (30%)</li>
+                    <li>• Innovation & Originality (25%)</li>
+                    <li>• Practical Application & Scalability (25%)</li>
+                    <li>• UI/UX Polish & Presentation (20%)</li>
+                </ul>
+            </div>
+
+            <div class="pt-2 flex justify-end">
+                <a href="#id-pass" onclick="closeArenaModal()" class="clip-stark-btn bg-stark-heroRed text-white font-hud text-xs font-bold px-6 py-2.5 shadow-red-glow">
+                    REGISTER FOR THIS TRACK
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8 relative z-10 font-hud text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-stark-heroRed text-white font-marvel text-xl font-bold flex items-center justify-center rounded">
+                    GFG
+                </div>
+                <div>
+                    <span class="block text-white font-bold">GEEKSFORGEEKS STUDENT CHAPTER</span>
+                    <span class="block text-slate-400 text-[10px]">BENNETT UNIVERSITY, GREATER NOIDA</span>
+                </div>
+            </div>
+
+            <div class="text-center md:text-right text-[10px] text-slate-400 font-sans">
+                <p>© 2026 GFG Student Chapter Bennett University. Stark Expo Edition.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* Quantum Background Canvas Particle Matrix */
+        const canvas = document.getElementById('starkCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.7;
+                this.speedY = (Math.random() - 0.5) * 0.7;
+                const colors = ['#00F0FF', '#EC1D24', '#FFD700', '#A855F7'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 85; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.onload = function() {
+            animateParticles();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            switchScheduleDay(1);
+        };
+
+        /* Tone.js Audio Synthesizer Engine & Marvel Jukebox */
+        let audioActive = false;
+        let synth = null;
+        let themePlaying = false;
+        let currentThemeKey = 'prayforme';
+
+        function toggleAudioEngine() {
+            audioActive = !audioActive;
+            const icon = document.getElementById('audioIcon');
+            if (audioActive) {
+                Tone.start();
+                if (!synth) synth = new Tone.Synth().toDestination();
+                icon.className = 'fa-solid fa-volume-high text-stark-accent';
+                playSynthSound('collect');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-500';
+            }
+        }
+
+        const themeList = ['prayforme', 'avengers', 'xmen', 'spiderman'];
+        const themeNames = {
+            'prayforme': 'PRAY FOR ME (BLACK PANTHER)',
+            'avengers': 'AVENGERS ENDGAME',
+            'xmen': 'X-MEN \'97 SYNTH',
+            'spiderman': 'SPIDER-MAN SWING'
+        };
+
+        function cycleNextMarvelTheme() {
+            if (themePlaying) {
+                const currentIndex = themeList.indexOf(currentThemeKey);
+                const nextIndex = (currentIndex + 1) % themeList.length;
+                playMarvelTheme(themeList[nextIndex]);
+            } else {
+                playMarvelTheme(currentThemeKey);
+            }
+        }
+
+        function toggleCurrentMarvelTheme() {
+            if (themePlaying) {
+                stopAvengersTheme();
+            } else {
+                playMarvelTheme(currentThemeKey);
+            }
+        }
+
+        async function playMarvelTheme(themeKey) {
+            await Tone.start();
+            stopAvengersTheme();
+
+            themePlaying = true;
+            audioActive = true;
+            currentThemeKey = themeKey;
+            document.getElementById('audioIcon').className = 'fa-solid fa-volume-high text-stark-accent';
+
+            const themeBtnText = document.getElementById('themeSongText');
+            const themeBtnIcon = document.getElementById('themeSongIcon');
+            const heroThemeBtnText = document.getElementById('heroThemeBtnText');
+            const themeWaveBars = document.getElementById('themeWaveBars');
+
+            const activeName = themeNames[themeKey] || 'MARVEL THEME';
+
+            if (themeBtnText) themeBtnText.innerText = activeName;
+            if (themeBtnIcon) themeBtnIcon.className = "fa-solid fa-pause text-amber-400";
+            if (heroThemeBtnText) heroThemeBtnText.innerText = `NEXT THEME (${activeName})`;
+            if (themeWaveBars) {
+                themeWaveBars.classList.remove('hidden');
+                themeWaveBars.classList.add('flex');
+            }
+
+            showToast(`🎵 NOW PLAYING: ${activeName}!`);
+
+            let notes = [];
+            let bpm = 105;
+
+            if (themeKey === 'prayforme') {
+                bpm = 105;
+                const leadSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.04, decay: 0.25, sustain: 0.5, release: 0.6 }
+                }).toDestination();
+                leadSynth.volume.value = -3;
+
+                const bassSynth = new Tone.MonoSynth({
+                    oscillator: { type: "square" },
+                    envelope: { attack: 0.05, decay: 0.3, sustain: 0.8, release: 0.5 },
+                    filterEnvelope: { attack: 0.05, decay: 0.3, sustain: 0.6, release: 0.5, baseFrequency: 150, octaves: 3 }
+                }).toDestination();
+                bassSynth.volume.value = -2;
+
+                notes = [
+                    { time: "0:0:0", note: "C4", duration: "8n", bass: "C2" },
+                    { time: "0:0:2", note: "Eb4", duration: "8n" },
+                    { time: "0:1:0", note: "F4", duration: "8n", bass: "C2" },
+                    { time: "0:1:2", note: "G4", duration: "4n" },
+                    { time: "0:2:2", note: "F4", duration: "8n", bass: "Ab1" },
+                    { time: "0:3:0", note: "Eb4", duration: "8n" },
+                    { time: "0:3:2", note: "C4", duration: "4n", bass: "Bb1" },
+                    { time: "1:0:0", note: "C4", duration: "8n", bass: "C2" },
+                    { time: "1:0:2", note: "Eb4", duration: "8n" },
+                    { time: "1:1:0", note: "F4", duration: "8n", bass: "C2" },
+                    { time: "1:1:2", note: "G4", duration: "2n" },
+                    { time: "1:3:2", note: "Bb4", duration: "8n", bass: "G1" },
+                    { time: "2:0:0", note: "G4", duration: "2n.", bass: "C2" }
+                ];
+
+                Tone.Transport.bpm.value = bpm;
+                Tone.Transport.cancel();
+
+                const part = new Tone.Part((time, value) => {
+                    leadSynth.triggerAttackRelease(value.note, value.duration, time);
+                    if (value.bass) bassSynth.triggerAttackRelease(value.bass, value.duration, time);
+                }, notes);
+
+                part.loop = true;
+                part.loopEnd = "2:2:0";
+                part.start(0);
+
+                Tone.Transport.start();
+                window.avengersPart = part;
+                window.avengersSynths = [leadSynth, bassSynth];
+
+            } else if (themeKey === 'avengers') {
+                bpm = 92;
+                const brassSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.08, decay: 0.3, sustain: 0.6, release: 0.8 }
+                }).toDestination();
+                brassSynth.volume.value = -4;
+
+                const bassSynth = new Tone.Synth({
+                    oscillator: { type: "triangle" },
+                    envelope: { attack: 0.1, decay: 0.4, sustain: 0.8, release: 1 }
+                }).toDestination();
+                bassSynth.volume.value = -2;
+
+                notes = [
+                    { time: "0:0:0", note: "E3", duration: "8n", bass: "E2" },
+                    { time: "0:0:2", note: "E3", duration: "16n" },
+                    { time: "0:1:0", note: "E3", duration: "8n" },
+                    { time: "0:1:2", note: "D3", duration: "8n" },
+                    { time: "0:2:0", note: "G3", duration: "2n", bass: "G2" },
+                    { time: "1:0:0", note: "A3", duration: "2n", bass: "A2" },
+                    { time: "1:2:0", note: "G3", duration: "4n" },
+                    { time: "1:3:0", note: "F#3", duration: "8n" },
+                    { time: "1:3:2", note: "G3", duration: "8n" },
+                    { time: "2:0:0", note: "E3", duration: "2n", bass: "E2" },
+                    { time: "2:2:0", note: "B3", duration: "2n" },
+                    { time: "3:0:0", note: "C4", duration: "2n", bass: "C2" },
+                    { time: "3:2:0", note: "B3", duration: "4n" },
+                    { time: "3:3:0", note: "A3", duration: "4n", bass: "A2" },
+                    { time: "4:0:0", note: "E4", duration: "2n.", bass: "E2" }
+                ];
+
+                Tone.Transport.bpm.value = bpm;
+                Tone.Transport.cancel();
+
+                const part = new Tone.Part((time, value) => {
+                    brassSynth.triggerAttackRelease(value.note, value.duration, time);
+                    if (value.bass) bassSynth.triggerAttackRelease(value.bass, value.duration, time);
+                }, notes);
+
+                part.loop = true;
+                part.loopEnd = "5:0:0";
+                part.start(0);
+
+                Tone.Transport.start();
+                window.avengersPart = part;
+                window.avengersSynths = [brassSynth, bassSynth];
+
+            } else if (themeKey === 'xmen') {
+                bpm = 128;
+                const leadSynth = new Tone.MonoSynth({
+                    oscillator: { type: "square" },
+                    envelope: { attack: 0.02, decay: 0.2, sustain: 0.4, release: 0.4 },
+                    filterEnvelope: { attack: 0.02, decay: 0.2, sustain: 0.5, release: 0.4, baseFrequency: 300, octaves: 4 }
+                }).toDestination();
+                leadSynth.volume.value = -3;
+
+                const bassSynth = new Tone.Synth({
+                    oscillator: { type: "sawtooth" },
+                    envelope: { attack: 0.01, decay: 0.2, sustain: 0.7, release: 0.2 }
+                }).toDestination();
+                bassSynth.volume.value = -4;
+
+                notes = [
+                    { time: "0:0:0", note: "E4", duration: "8n", bass: "E2" },
+                    { time: "0:0:2", note: "G4", duration: "8n" },
+                    { time: "0:1:0", note: "A4", duration: "4n", bass: "E2" },
+                    { time: "0:2:0", note: "E4", duration: "8n", bass: "E2" },
+                    { time: "0:2:2", note: "G4", duration: "8n" },
+                    { time: "0:3:0", note: "A4", duration: "8n", bass: "E2" },
+                    { time: "0:3:2", note: "C5", duration: "8n" },
+                    { time: "1:0:0", note: "B4", duration: "8n", bass: "G2" },
+                    { time: "1:0:2", note: "A4", duration: "8n" },
+                    { time: "1:1:0", note: "G4", duration: "8n", bass: "G2" },
+                    { time: "1:1:2", note: "E4", duration: "4n", bass: "E2" },
+                    { time: "1:3:0", note: "D4", duration: "4n", bass: "D2" },
+                    { time: "2:0:0", note: "E4", duration: "8n", bass: "E2" },
+                    { time: "2:0:2", note: "G4", duration: "8n" },
+                    { time: "2:1:0", note: "A4", duration: "4n", bass: "E2" },
+                    { time: "2:2:0", note: "B4", duration: "4n", bass: "G2" },
+                    { time: "2:3:0", note: "G4", duration: "4n", bass: "E2" }
+                ];
+
+                Tone.Transport.bpm.value = bpm;
+                Tone.Transport.cancel();
+
+                const part = new Tone.Part((time, value) => {
+                    leadSynth.triggerAttackRelease(value.note, value.duration, time);
+                    if (value.bass) bassSynth.triggerAttackRelease(value.bass, value.duration, time);
+                }, notes);
+
+                part.loop = true;
+                part.loopEnd = "3:0:0";
+                part.start(0);
+
+                Tone.Transport.start();
+                window.avengersPart = part;
+                window.avengersSynths = [leadSynth, bassSynth];
+
+            } else if (themeKey === 'spiderman') {
+                bpm = 116;
+                const funkSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: "triangle" },
+                    envelope: { attack: 0.05, decay: 0.2, sustain: 0.5, release: 0.5 }
+                }).toDestination();
+                funkSynth.volume.value = -3;
+
+                notes = [
+                    { time: "0:0:0", note: "C4", duration: "8n" },
+                    { time: "0:0:2", note: "E4", duration: "8n" },
+                    { time: "0:1:0", note: "G4", duration: "8n" },
+                    { time: "0:1:2", note: "A4", duration: "4n" },
+                    { time: "1:0:0", note: "C5", duration: "8n" },
+                    { time: "1:0:2", note: "A4", duration: "8n" },
+                    { time: "1:1:0", note: "G4", duration: "4n" },
+                    { time: "2:0:0", note: "F4", duration: "8n" },
+                    { time: "2:0:2", note: "A4", duration: "8n" },
+                    { time: "2:1:0", note: "C5", duration: "8n" },
+                    { time: "2:1:2", note: "D5", duration: "4n" }
+                ];
+
+                Tone.Transport.bpm.value = bpm;
+                Tone.Transport.cancel();
+
+                const part = new Tone.Part((time, value) => {
+                    funkSynth.triggerAttackRelease(value.note, value.duration, time);
+                }, notes);
+
+                part.loop = true;
+                part.loopEnd = "3:0:0";
+                part.start(0);
+
+                Tone.Transport.start();
+                window.avengersPart = part;
+                window.avengersSynths = [funkSynth];
+            }
+        }
+
+        function stopAvengersTheme() {
+            themePlaying = false;
+            Tone.Transport.stop();
+            Tone.Transport.cancel();
+            if (window.avengersPart) {
+                window.avengersPart.dispose();
+                window.avengersPart = null;
+            }
+            if (window.avengersSynths) {
+                window.avengersSynths.forEach(s => s.dispose());
+                window.avengersSynths = null;
+            }
+
+            const themeBtnText = document.getElementById('themeSongText');
+            const themeBtnIcon = document.getElementById('themeSongIcon');
+            const heroThemeBtnText = document.getElementById('heroThemeBtnText');
+            const themeWaveBars = document.getElementById('themeWaveBars');
+
+            if (themeBtnText) themeBtnText.innerText = "MARVEL JUKEBOX";
+            if (themeBtnIcon) themeBtnIcon.className = "fa-solid fa-music text-stark-heroRed animate-pulse";
+            if (heroThemeBtnText) heroThemeBtnText.innerText = "PLAY MARVEL THEME SONG";
+            if (themeWaveBars) {
+                themeWaveBars.classList.remove('flex');
+                themeWaveBars.classList.add('hidden');
+            }
+
+            showToast("🔇 MARVEL THEME SONG PAUSED");
+        }
+
+        function playSynthSound(type) {
+            if (!audioActive) return;
+            try {
+                if (!synth) synth = new Tone.Synth().toDestination();
+                if (type === 'click') synth.triggerAttackRelease("E5", "16n");
+                else if (type === 'collect') synth.triggerAttackRelease("A5", "8n");
+                else if (type === 'surge') synth.triggerAttackRelease("E6", "4n");
+            } catch(e) {}
+        }
+
+        /* Infinity Stones Easter Egg Collector */
+        const collectedStones = new Set();
+        function collectInfinityStone(stone) {
+            if (collectedStones.has(stone)) return;
+            collectedStones.add(stone);
+            playSynthSound('collect');
+
+            const stoneElement = document.getElementById(`stone-${stone}`);
+            if (stoneElement) stoneElement.classList.add('collected');
+
+            const hudIcon = document.getElementById(`hudStone-${stone}`);
+            if (hudIcon) {
+                hudIcon.classList.remove('opacity-20');
+                hudIcon.classList.add('animate-bounce');
+            }
+
+            showToast(`⚡ STARK HUD: ${stone.toUpperCase()} STONE ACTIVATED (${collectedStones.size}/6)`);
+
+            if (collectedStones.size === 6) {
+                playSynthSound('surge');
+                setTimeout(() => {
+                    showToast("🌌 INFINITY GAUNTLET FULLY CHARGED! JARVIS OVERDRIVE!");
+                }, 300);
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-6 right-6 z-50 bg-slate-900 border-2 border-stark-accent p-4 rounded-xl shadow-stark-glow font-hud text-xs text-stark-accent font-bold flex items-center gap-3 animate-bounce';
+            toast.innerHTML = `<i class="fa-solid fa-atom text-stark-heroRed text-base"></i> <span>${msg}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        function updateCountdown() {
+            const target = new Date('2026-11-15T09:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            if (diff <= 0) return;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('cd-mins').innerText = String(mins).padStart(2, '0');
+            document.getElementById('cd-secs').innerText = String(secs).padStart(2, '0');
+        }
+
+        const scheduleData = {
+            1: [
+                { time: "08:00 AM", title: "CHECK-IN & S.H.I.E.L.D BADGE ISSUANCE", desc: "Arrival at Bennett University. Team registration & welcome breakfast." },
+                { time: "10:00 AM", title: "STARK EXPO OPENING KEYNOTE", desc: "GFG leads unveil the Multiverse problem tracks & guidelines." },
+                { time: "11:00 AM", title: "HACKATHON TIMER LAUNCH ⚡", desc: "36-hour timer begins. Teams start developing in assigned labs." }
+            ],
+            2: [
+                { time: "09:00 AM", title: "MENTOR REVIEWS - ROUND 1", desc: "Industry mentors assess initial repositories & prototype designs." },
+                { time: "03:00 PM", title: "INFINITY SPEED SPRINT", desc: "Bonus rapid-fire mini challenges for extra swag points." }
+            ],
+            3: [
+                { time: "08:00 AM", title: "FINAL CODE FREEZE", desc: "All team repositories locked and submitted to the jury." },
+                { time: "11:00 AM", title: "THE ENDGAME PITCH FINALE", desc: "Top finalist teams pitch live on stage." },
+                { time: "03:00 PM", title: "VICTORY CEREMONY", desc: "Awarding Infinity Gauntlet trophies & cash bounties." }
+            ]
+        };
+
+        function switchScheduleDay(day) {
+            playSynthSound('click');
+            [1, 2, 3].forEach(d => {
+                const btn = document.getElementById(`day${d}Btn`);
+                if (d === day) {
+                    btn.className = "px-6 py-3 rounded-lg border-2 border-stark-heroRed bg-stark-heroRed text-white font-bold transition-all shadow-red-glow";
+                } else {
+                    btn.className = "px-6 py-3 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 font-bold transition-all hover:border-stark-accent";
+                }
+            });
+
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = scheduleData[day].map((item, idx) => `
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-900 border-2 border-stark-accent text-stark-accent font-hud text-xs font-bold z-10 shrink-0 shadow-stark-glow">
+                        0${idx + 1}
+                    </div>
+                    <div class="w-[calc(100%-2.5rem)] md:w-[calc(50%-2rem)] dark-stark-card p-5 rounded-xl border border-slate-800">
+                        <span class="font-hud text-xs text-stark-gold font-bold block">${item.time}</span>
+                        <h4 class="font-marvel text-2xl text-white mt-0.5">${item.title}</h4>
+                        <p class="text-xs text-slate-300 font-sans mt-1">${item.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        const heroMap = {
+            'Iron Man': { img: 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=300&q=80' },
+            'Spider-Man': { img: 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?auto=format&fit=crop&w=300&q=80' },
+            'Doctor Strange': { img: 'http://www.impawards.com/2016/posters/doctor_strange.jpg' },
+            'Thor': { img: 'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=300&q=80' },
+            'Captain America': { img: 'https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?auto=format&fit=crop&w=300&q=80' }
+        };
+
+        function updateHeroPass() {
+            const name = document.getElementById('passNameInput').value || 'TONY STARK';
+            const team = document.getElementById('passTeamInput').value || 'AVENGER CODERS';
+            const college = document.getElementById('passCollegeInput').value || 'BENNETT UNIV';
+            const heroClass = document.getElementById('passClassInput').value;
+
+            document.getElementById('passNameDisplay').innerText = name.toUpperCase();
+            document.getElementById('passTeamDisplay').innerText = team.toUpperCase();
+            document.getElementById('passCollegeDisplay').innerText = college;
+            document.getElementById('passClassTag').innerText = heroClass.toUpperCase();
+
+            const meta = heroMap[heroClass] || heroMap['Iron Man'];
+            document.getElementById('passAvatarImg').src = meta.img;
+        }
+
+        function claimClearancePass() {
+            playSynthSound('surge');
+            showToast('✅ S.H.I.E.L.D PASS GENERATED SUCCESSFULLY!');
+        }
+
+        function copyClearanceCode() {
+            const code = document.getElementById('passCodeDisplay').innerText;
+            const temp = document.createElement('textarea');
+            temp.value = `S.H.I.E.L.D Ticket Code: ${code} - Stark Expo Multiverse of Code`;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('📋 Clearance Code Copied!');
+        }
+
+        const arenaModalData = {
+            ironman: { title: 'IRON MAN: NEURAL HUD', tag: 'TRACK 01 // AI & NEURAL SYSTEMS', desc: 'Build autonomous agents, vision tools, and personal developer assistants.', img: 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?auto=format&fit=crop&w=800&q=80' },
+            spiderman: { title: 'SPIDER-MAN: WEB UX', tag: 'TRACK 02 // WEB & UX', desc: 'Craft real-time scalable web applications, community networks, and accessible interfaces.', img: 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?auto=format&fit=crop&w=800&q=80' },
+            strange: { title: 'DR. STRANGE: QUANTUM & WEB3', tag: 'TRACK 03 // QUANTUM & BLOCKCHAIN', desc: 'Develop zero-knowledge security, smart contracts, and decentralized ledgers.', img: 'http://www.impawards.com/2016/posters/doctor_strange.jpg' },
+            thor: { title: 'THOR: CLOUD STORMBREAKER', tag: 'TRACK 04 // CLOUD INFRA', desc: 'Architect resilient backend microservices, auto-scaling pipelines, and DevOps engines.', img: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=800&q=80' },
+            cap: { title: 'CAPTAIN AMERICA: OPEN SOURCE', tag: 'TRACK 05 // SOCIAL GOOD', desc: 'Create open source software serving public health, disaster response, and green energy.', img: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=800&q=80' },
+            wildcard: { title: 'MULTIVERSE WILDCARD', tag: 'WILDCARD // OPEN INNOVATION', desc: 'Pitch any raw, multi-domain tech innovation directly to the Illuminati Jury.', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80' }
+        };
+
+        function openArenaModal(key) {
+            playSynthSound('click');
+            const data = arenaModalData[key];
+            if (!data) return;
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalTrackTag').innerText = data.tag;
+            document.getElementById('modalDesc').innerText = data.desc;
+            if (data.img) {
+                document.getElementById('modalCoverImg').src = data.img;
+            }
+            document.getElementById('arenaModal').classList.remove('hidden');
+            document.getElementById('arenaModal').classList.add('flex');
+        }
+
+        function closeArenaModal() {
+            document.getElementById('arenaModal').classList.remove('flex');
+            document.getElementById('arenaModal').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileDrawer').classList.toggle('hidden');
+        }
+
+        /* Custom Reticle Cursor Follower */
+        const cursorRing = document.getElementById('cursorRing');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = -100, mouseY = -100;
+        let ringX = -100, ringY = -100;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (cursorDot) {
+                cursorDot.style.left = `${mouseX}px`;
+                cursorDot.style.top = `${mouseY}px`;
+            }
+        });
+
+        function renderCursor() {
+            ringX += (mouseX - ringX) * 0.2;
+            ringY += (mouseY - ringY) * 0.2;
+
+            if (cursorRing) {
+                cursorRing.style.left = `${ringX}px`;
+                cursorRing.style.top = `${ringY}px`;
+            }
+            requestAnimationFrame(renderCursor);
+        }
+        renderCursor();
+
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target.closest('a, button, input, select, .infinity-stone, .dark-stark-card, [onclick]');
+            if (target) {
+                document.body.classList.add('cursor-hover-active');
+            } else {
+                document.body.classList.remove('cursor-hover-active');
+            }
+        });
+    </script>
+</body>
+</html>
